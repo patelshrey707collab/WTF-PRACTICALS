@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodExpress - Capstone Management Dashboard</title>
+    <!-- Link to the Capstone project stylesheet -->
+    <link rel="stylesheet" href="style12.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <h2>FoodExpress</h2>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Dashboard</a></li>
+                    <li><a href="#products">Products / Menu</a></li>
+                    <li><a href="#orders">Orders</a></li>
+                    <li><a href="#security">Security Log</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <h1>Admin Control Panel</h1>
+                <span id="userStatus" style="background: #e2e8f0; padding: 0.5rem 1rem; border-radius: 4px; font-size: 0.9rem;">Welcome, Admin</span>
+            </header>
+
+            <!-- Dynamic Statistics Cards -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <h4>Total Orders</h4>
+                    <p id="totalOrders">142</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Revenue</h4>
+                    <p id="totalRevenue">$4,250</p>
+                </div>
+                <div class="stat-card">
+                    <h4>System Status</h4>
+                    <p id="systemStatus" style="color: #16a34a; font-size: 1.4rem;">Secure & Active</p>
+                </div>
+            </section>
+
+            <!-- Data Management Section -->
+            <section id="products" style="margin-top: 2.5rem; background: #ffffff; padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                <h2>Inventory & Product Management</h2>
+                <p style="color: #64748b; margin-bottom: 1rem;">Perform database-driven CRUD operations securely.</p>
+                
+                <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid #e2e8f0;">
+                            <th style="padding: 0.75rem;">ID</th>
+                            <th style="padding: 0.75rem;">Product Name</th>
+                            <th style="padding: 0.75rem;">Category</th>
+                            <th style="padding: 0.75rem;">Price</th>
+                            <th style="padding: 0.75rem;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTableBody">
+                        <tr style="border-bottom: 1px solid #f1f5f9;">
+                            <td style="padding: 0.75rem;">1</td>
+                            <td style="padding: 0.75rem;">Gourmet Burger</td>
+                            <td style="padding: 0.75rem;">Fast Food</td>
+                            <td style="padding: 0.75rem;">$12.99</td>
+                            <td style="padding: 0.75rem;">
+                                <button style="padding: 0.3rem 0.6rem; background: #2563eb; color: #fff; border: none; border-radius: 4px; cursor: pointer;">Edit</button>
+                                <button style="padding: 0.3rem 0.6rem; background: #dc2626; color: #fff; border: none; border-radius: 4px; cursor: pointer;">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <!-- Client-side script integration for dynamic API updates -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('/api/stats');
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('totalOrders').textContent = data.totalOrders;
+                    document.getElementById('totalRevenue').textContent = data.revenue;
+                }
+            } catch (err) {
+                console.error('Failed to fetch dashboard metrics via API:', err);
+            }
+        });
+    </script>
+</body>
+</html>

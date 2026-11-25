@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuickShop Marketplace | REST &amp; JSON Demo</title>
+</head>
+<body>
+  <h1>QuickShop Marketplace — REST API &amp; JSON</h1>
+
+  <button type="button" id="loadBtn">Fetch Products (GET)</button>
+  <p id="apiMessage"></p>
+  <ul id="itemsList"></ul>
+
+  <h2>Create Product (POST JSON)</h2>
+  <input type="text" id="prodTitle" placeholder="Product title" />
+  <input type="number" id="prodPrice" placeholder="Price (INR)" />
+  <button type="button" id="postBtn">Send POST Request</button>
+
+  <script>
+    const API_URL = "https://jsonplaceholder.typicode.com/posts";
+    const apiMessage = document.getElementById("apiMessage");
+    const itemsList = document.getElementById("itemsList");
+
+    document.getElementById("loadBtn").addEventListener("click", async () => {
+      apiMessage.textContent = "Sending GET request...";
+      itemsList.innerHTML = "";
+      try {
+        const res = await fetch(`${API_URL}?_limit=5`);
+        if (!res.ok) throw new Error(`Request failed with status ${res.status}`);
+        const data = await res.json();
+        data.forEach((item) => {
+          const li = document.createElement("li");
+          li.textContent = `#${item.id}: ${item.title}`;
+          itemsList.appendChild(li);
+        });
+        apiMessage.textContent = `GET succeeded (Status ${res.status}).`;
+      } catch (error) {
+        apiMessage.textContent = `Error: ${error.message}`;
+      }
+    });
+
+    document.getElementById("postBtn").addEventListener("click", async () => {
+      const title = document.getElementById("prodTitle").value.trim();
+      const price = Number(document.getElementById("prodPrice").value);
+      if (!title || price <= 0) {
+        apiMessage.textContent = "Enter a valid product title and positive price.";
+        return;
+      }
+
+      const payload = { title, price, currency: "INR" };
+      apiMessage.textContent = "Sending JSON payload via POST...";
+      try {
+        const res = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json; charset=UTF-8" },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error(`POST failed with status ${res.status}`);
+        const created = await res.json();
+        apiMessage.textContent = `POST succeeded (Status ${res.status}) — Created ID: ${created.id}, Title: "${created.title}"`;
+      } catch (error) {
+        apiMessage.textContent = `Error: ${error.message}`;
+      }
+    });
+  </script>
+</body>
+</html>

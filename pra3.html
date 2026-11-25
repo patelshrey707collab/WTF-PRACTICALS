@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Bank Ltd. - Banking Utilities</title>
+    <link rel="stylesheet" href="style3.css">
+   
+</head>
+<body>
+
+<div class="container">
+    <h2>Secure Bank Ltd. - Financial Calculators</h2>
+
+    <!-- Section 1: Loan Eligibility -->
+    <div class="form-group">
+        <h3>1. Check Loan Eligibility</h3>
+        <label for="monthlyIncome">Monthly Income ($):</label>
+        <input type="number" id="monthlyIncome" placeholder="e.g., 5000">
+
+        <label for="creditScore">Credit Score:</label>
+        <input type="number" id="creditScore" placeholder="e.g., 720">
+
+        <button onclick="checkEligibility()">Check Eligibility</button>
+    </div>
+
+    <!-- Section 2: EMI Calculator -->
+    <div class="form-group">
+        <h3>2. EMI & Interest Estimator</h3>
+        <label for="principal">Loan Amount ($):</label>
+        <input type="number" id="principal" placeholder="e.g., 100000">
+
+        <label for="annualRate">Annual Interest Rate (%):</label>
+        <input type="number" id="annualRate" placeholder="e.g., 8.5">
+
+        <label for="tenureYears">Tenure (Years):</label>
+        <input type="number" id="tenureYears" placeholder="e.g., 5">
+
+        <button onclick="calculateEMIAndSchedule()">Calculate EMI & Schedule</button>
+    </div>
+
+    <!-- Dynamic Output Area -->
+    <div id="output" class="result" style="display:none;"></div>
+</div>
+
+<script src="script3.js"></script>
+</body>
+</html>
